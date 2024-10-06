@@ -25,7 +25,7 @@ float[][] fallSpeed = new float[numColumns][numRows];
 color[][] charColors = new color[numColumns][numRows];
 
 void setup() {
-  size(800, 600);
+  size(1440, 900);
   noStroke();
   
   for (int i = 0; i < numShapes; i++) {

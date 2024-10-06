@@ -4,7 +4,7 @@
 int grid = 4; // Tamaño inicial de la grilla
 
 void setup() {
-  size(1000, 1000);
+  size(1440, 900);
   noStroke();
 }
 
@@ -23,11 +23,28 @@ void draw() {
     drawGrid6Set4();
   }
 }
+// tecla presionada
+void keyPressed() {
+  if (key == 'I') {
+    grid = 6;
+  } else if (key == 'O') {
+    grid = 7;
+  } else if (key == 'V') {
+    grid = 8;
+  } else if (key == 'P') {
+    grid = 9;
+  } else if (key == 'X') {
+    grid = 4;
+  }
+}
+
 
 // Dibuja grilla de 4 espacios
 void drawGrid4() {
-  int size = width / 2;
-  
+  int size = height / 2;
+
+  pushMatrix();
+  translate(270, 0);
   // Primer espacio
   fill(#A63F03);
   rect(0, 0, size, size);
@@ -51,6 +68,8 @@ void drawGrid4() {
   rect(size, size, size, size);
   fill(#963D56);
   ellipse(size + size/2, size + size/2, size/2, size/2);
+  
+  popMatrix(); 
 }
 
 // Dibuja la primera grilla de 6 espacios
@@ -217,17 +236,3 @@ void drawGrid6Set4() {
   ellipse(2*size + size/2, size + size/2, size/2, size/2);
 }
 
-// tecla presionada
-void keyPressed() {
-  if (key == 'I') {
-    grid = 6;
-  } else if (key == 'O') {
-    grid = 7;
-  } else if (key == 'V') {
-    grid = 8;
-  } else if (key == 'P') {
-    grid = 9;
-  } else if (key == 'X') {
-    grid = 4;
-  }
-}

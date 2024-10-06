@@ -1,7 +1,7 @@
 PFont arial32, garamond24;  // Variable para almacenar la fuente
 
 void setup() {
-  size(800, 400);
+  size(1440, 900);
   String[] fontList = PFont.list();
   printArray(fontList);
   // Cargar la fuente desde la carpeta 'data' (ej. Arial en tamaño 32)

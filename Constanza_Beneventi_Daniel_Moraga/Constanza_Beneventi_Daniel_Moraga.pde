@@ -24,7 +24,7 @@ int forma = 0; // Almacena la figura
 
 // II. Set ups - Configuraciones
 void setup() {
-  size(800, 800); // Genera canvas de 800x800 pixeles
+  size(1440, 900); // Genera canvas de 800x800 pixeles
   fullScreen();
   blanco = color(255, 255, 255);
   negro = color(0, 0, 0);

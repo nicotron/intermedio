@@ -37,7 +37,7 @@ class TextLine {
 }
 
 void setup() {
-  size(800, 800);
+  size(1440, 900);
   blockSize = width / cols; //Tamaño de cada bloque
   
   // Cargar estilos de fuentes (carpeta "data")

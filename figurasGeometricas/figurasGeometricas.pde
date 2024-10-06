@@ -1,7 +1,7 @@
 // Figuras geométricas desde la subdivisión de un círculo
 
 void setup() {
-  size(400, 400);
+  size(1440, 900);
   background(255);
   
   // Llama a la función para dibujar diferentes polígonos

@@ -14,7 +14,7 @@ int ancho = 400; // Ancho del cuadro
 int alto = 400; // Alto del cuadro
 
 void setup() {
-  size(800, 800);
+  size(1440, 900);
   //fullScreen();
   img = loadImage("marilyn 1.jpg"); // Carga la imagen
   img.resize(ancho, alto); // Redimensiona la imagen al tamaño del cuadro

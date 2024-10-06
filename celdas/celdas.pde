@@ -7,7 +7,7 @@ char[][] contenidoGrilla = new char[columnas][filas];  // Matriz para almacenar 
 boolean[][] celdasBloqueadas = new boolean[columnas][filas];  // Matriz para identificar celdas bloqueadas (negras)
 
 void setup() {
-  size(1400, 900);  // Tamaño del canvas 1400x900
+  size(1440, 900);  // Tamaño del canvas 1400x900
 
   // Inicializar todas las celdas de la grilla con un espacio vacío ' '
   for (int i = 0; i < columnas; i++) {

@@ -31,7 +31,7 @@ int formaEsquinaActual = 0;            // Formas esquinas (tecla 3)
 
 // Configuraciones
 void setup () {
-  size(1500, 820);                     // canvas
+  size(1440, 900);                     // canvas
   x = width / 2;                       // posición en x
   y = height / 2;                      // posición en y
   columnas = 4;

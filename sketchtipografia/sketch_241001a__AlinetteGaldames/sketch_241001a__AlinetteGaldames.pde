@@ -23,7 +23,7 @@ void setup() {
   fonts[7] = createFont("Irlandes-Regular.otf", 48); // Cambia "AnotherFont3.ttf" por el nombre de tu archivo de fuente
   fonts[8] = createFont("Latte Regular.1ecbd380840.otf", 48); // Cambia "AnotherFont3.ttf" por el nombre de tu archivo de fuente
   
-   textFont(fonts[1]); // Establece la fuente inicial.
+   textFont(fonts[currentFontIndex]); // Establece la fuente inicial.
 
   background(255);           // Establece el color de fondo en blanco (255 en RGB).
   fill(0);                   // Establece el color de relleno (texto) en negro (0 en RGB).

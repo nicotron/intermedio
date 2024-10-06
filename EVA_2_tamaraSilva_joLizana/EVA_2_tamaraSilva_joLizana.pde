@@ -16,7 +16,7 @@ boolean circulo, cuadrado;
 
 // configuraciones
 void setup () {
-  size(1000, 1000);
+  size(1440, 900);
   x = mouseX;
   y = mouseY;
 
