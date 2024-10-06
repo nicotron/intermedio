@@ -13,34 +13,30 @@ void draw() {
   background(255);
   if(grid == 0) {
     pushMatrix();
-    translate(width*.24, 0);
-    scale(.95);
-    drawGrid4();
+    translate((width-height)/2, 0);
+    // scale(.95);
+    paletaInicio();
     popMatrix();
   }
    else if (grid == 1) {
     pushMatrix();
-    translate(width*.024, 0);
-    scale(.9);
-    drawGrid6Set1();
+    translate((width-(height*1.5))/2, 0);
+    paletaInvierno();
     popMatrix();
   } else if (grid == 2) {
     pushMatrix();
-    translate(width*.024, 0);
-    scale(.9);
-    drawGrid6Set2();
+    translate((width-(height*1.5))/2, 0);
+    paletaOtono();
     popMatrix();
   } else if (grid == 3) {
     pushMatrix();
-    translate(width*.024, 0);
-    scale(.9);
-    drawGrid6Set3();
+    translate((width-(height*1.5))/2, 0);
+    paletaVerano();
     popMatrix();
   } else if (grid == 4) {
     pushMatrix();
-    translate(width*.024, 0);
-    scale(.9);
-    drawGrid6Set4();
+    translate((width-(height*1.5))/2, 0);
+    paletaPrimavera();
     popMatrix();
   }
 }
@@ -49,7 +45,7 @@ void keyPressed() {
   if(key == 'I' || key == 'i') {
     grid = 1;
   } 
-  if (key == 'O'  || key == 'o') {
+  if (key == 'O' || key == 'o') {
     grid = 2;
   } 
   if (key == 'V' || key == 'v') {
@@ -62,200 +58,200 @@ void keyPressed() {
   }
 }
 
-// Dibuja grilla de 4 espacios
-void drawGrid4() {
-    int size = height / 2;
+// dibuja grilla de 4 espacios
+void paletaInicio() {
+    float size = height/2;
     
     pushMatrix();
-    translate(270, 0);
-    //Primer espacio
-    fill(#A63F03);
+    translate(0, 0);
+    //primer espacio
+    fill(#a63f03);
     rect(0, 0, size, size);
-    fill(#F25303);
+    fill(#f25303);
     ellipse(size / 2, size / 2, size / 2, size / 2);
     
-    //Segundo espacio
-    fill(#7AACBF);
+    //segundo espacio
+    fill(#7aacbf);
     rect(size, 0, size, size);
-    fill(#9ADBEF);
+    fill(#9adbef);
     ellipse(size + size / 2, size / 2, size / 2, size / 2);
     
-    //Tercer espacio
-    fill(#70FF8B);
+    //tercer espacio
+    fill(#70ff8b);
     rect(0, size, size, size);
-    fill(#FAF763);
+    fill(#faf763);
     ellipse(size / 2, size + size / 2, size / 2, size / 2);
     
-    //Cuarto espacio
-    fill(#E25E85);
+    //cuarto espacio
+    fill(#e25e85);
     rect(size, size, size, size);
-    fill(#963D56);
+    fill(#963d56);
     ellipse(size + size / 2, size + size / 2, size / 2, size / 2);
     
     popMatrix(); 
 }
 
-// Dibuja la primera grilla de 6 espacios
-void drawGrid6Set1() {
-    int size = width / 3;
+// dibuja la primera grilla de 6 espacios
+void paletaInvierno() {
+    int size = height / 2;
     
-    //Primer espacio
-    fill(#A0C3D9);
+    //primer espacio
+    fill(#a0c3d9);
     rect(0, 0, size, size);
-    fill(#BDE9FF);
+    fill(#bde9ff);
     ellipse(size / 2, size / 2, size / 2, size / 2);
     
-    //Segundo espacio
+    //segundo espacio
     fill(#366273);
     rect(size, 0, size, size);
-    fill(#5BA5BC);
+    fill(#5ba5bc);
     ellipse(size + size / 2, size / 2, size / 2, size / 2);
     
-    //Tercer espacio
-    fill(#7AACBF);
+    //tercer espacio
+    fill(#7aacbf);
     rect(2 * size, 0, size, size);
     fill(#097985);
     ellipse(2 * size + size / 2, size / 2, size / 2, size / 2);
     
-    //Cuarto espacio
-    fill(#BCD5DD);
+    //cuarto espacio
+    fill(#bcd5dd);
     rect(0, size, size, size);
-    fill(#EDF9FC);
+    fill(#edf9fc);
     ellipse(size / 2, size + size / 2, size / 2, size / 2);
     
-    //Quinto espacio
-    fill(#D5E7F2);
+    //quinto espacio
+    fill(#d5e7f2);
     rect(size, size, size, size);
-    fill(#B3C0C6);
+    fill(#b3c0c6);
     ellipse(size + size / 2, size + size / 2, size / 2, size / 2);
     
-    //Sexto espacio
+    //sexto espacio
     fill(#182626);
     rect(2 * size, size, size, size);
     fill(#578786);
     ellipse(2 * size + size / 2, size + size / 2, size / 2, size / 2);
 }
 
-// Dibuja la segunda grilla de 6 espacios
-void drawGrid6Set2() {
-    int size = width / 3;
+// dibuja la segunda grilla de 6 espacios
+void paletaOtono() {
+    int size = height / 2;
     
-    //Primer espacio
-    fill(#D96704);
+    //primer espacio
+    fill(#d96704);
     rect(0, 0, size, size);
-    fill(#8C3F06);
+    fill(#8c3f06);
     ellipse(size / 2, size / 2, size / 2, size / 2);
     
-    //Segundo espacio
-    fill(#4A5702);
+    //segundo espacio
+    fill(#4a5702);
     rect(size, 0, size, size);
-    fill(#AFC606);
+    fill(#afc606);
     ellipse(size + size / 2, size / 2, size / 2, size / 2);
     
-    //Tercer espacio
-    fill(#A63F03);
+    //tercer espacio
+    fill(#a63f03);
     rect(2 * size, 0, size, size);
-    fill(#F25303);
+    fill(#f25303);
     ellipse(2 * size + size / 2, size / 2, size / 2, size / 2);
     
-    //Cuarto espacio
-    fill(#F29F05);
+    //cuarto espacio
+    fill(#f29f05);
     rect(0, size, size, size);
-    fill(#9B6002);
+    fill(#9b6002);
     ellipse(size / 2, size + size / 2, size / 2, size / 2);
     
-    //Quinto espacio
-    fill(#83452A);
+    //quinto espacio
+    fill(#83452a);
     rect(size, size, size, size);
-    fill(#D66C47);
+    fill(#d66c47);
     ellipse(size + size / 2, size + size / 2, size / 2, size / 2);
     
-    //Sexto espacio
-    fill(#BF452A);
+    //sexto espacio
+    fill(#bf452a);
     rect(2 * size, size, size, size);
-    fill(#FF6A5A);
+    fill(#ff6a5a);
     ellipse(2 * size + size / 2, size + size / 2, size / 2, size / 2);
 }
 
-// Dibuja la tercera grilla de 6 espacios
-void drawGrid6Set3() {
-    int size = width / 3;
+// dibuja la tercera grilla de 6 espacios
+void paletaVerano() {
+    int size = height / 2;
     
-    //Primer espacio
-    fill(#F2D434);
+    //primer espacio
+    fill(#f2d434);
     rect(0, 0, size, size);
-    fill(#D95536);
+    fill(#d95536);
     ellipse(size / 2, size / 2, size / 2, size / 2);
     
-    //Segundo espacio
-    fill(#E25E85);
+    //segundo espacio
+    fill(#e25e85);
     rect(size, 0, size, size);
-    fill(#963D56);
+    fill(#963d56);
     ellipse(size + size / 2, size / 2, size / 2, size / 2);
     
-    //Tercer espacio
+    //tercer espacio
     fill(#038567);
     rect(2 * size, 0, size, size);
-    fill(#B7DBBF);
+    fill(#b7dbbf);
     ellipse(2 * size + size / 2, size / 2, size / 2, size / 2);
     
-    //Cuarto espacio
-    fill(#55317B);
+    //cuarto espacio
+    fill(#55317b);
     rect(0, size, size, size);
-    fill(#DCBEDC);
+    fill(#dcbedc);
     ellipse(size / 2, size + size / 2, size / 2, size / 2);
     
-    //Quinto espacio
-    fill(#D9828A);
+    //quinto espacio
+    fill(#d9828a);
     rect(size, size, size, size);
     fill(#805476);
     ellipse(size + size / 2, size + size / 2, size / 2, size / 2);
     
-    //Sexto espacio
-    fill(#67686D);
+    //sexto espacio
+    fill(#67686d);
     rect(2 * size, size, size, size);
-    fill(#4F788E);
+    fill(#4f788e);
     ellipse(2 * size + size / 2, size + size / 2, size / 2, size / 2);
 }
 
-// Dibuja la cuarta grilla de 6 espacios
-void drawGrid6Set4() {
-    int size = width / 3;
+// dibuja la cuarta grilla de 6 espacios
+void paletaPrimavera() {
+    int size = height / 2;
     
-    //Primer espacio
-    fill(#FFFC45);
+    //primer espacio
+    fill(#fffc45);
     rect(0, 0, size, size);
-    fill(#4EC8FF);
+    fill(#4ec8ff);
     ellipse(size / 2, size / 2, size / 2, size / 2);
     
-    //Segundo espacio
-    fill(#588C32);
+    //segundo espacio
+    fill(#588c32);
     rect(size, 0, size, size);
-    fill(#F24472);
+    fill(#f24472);
     ellipse(size + size / 2, size / 2, size / 2, size / 2);
     
-    //Tercer espacio
-    fill(#9700EC);
+    //tercer espacio
+    fill(#9700ec);
     rect(2 * size, 0, size, size);
-    fill(#FFEB78);
+    fill(#ffeb78);
     ellipse(2 * size + size / 2, size / 2, size / 2, size / 2);
     
-    //Cuarto espacio
-    fill(#79A2F2);
+    //cuarto espacio
+    fill(#79a2f2);
     rect(0, size, size, size);
-    fill(#D996A7);
+    fill(#d996a7);
     ellipse(size / 2, size + size / 2, size / 2, size / 2);
     
-    //Quinto espacio
-    fill(#70FF8B);
+    //quinto espacio
+    fill(#70ff8b);
     rect(size, size, size, size);
-    fill(#FAF763);
+    fill(#faf763);
     ellipse(size + size / 2, size + size / 2, size / 2, size / 2);
     
-    //Sexto espacio
-    fill(#FF86E3);
+    //sexto espacio
+    fill(#ff86e3);
     rect(2 * size, size, size, size);
-    fill(#8B6700);
+    fill(#8b6700);
     ellipse(2 * size + size / 2, size + size / 2, size / 2, size / 2);
 }
 
