@@ -14,7 +14,6 @@ void draw() {
   if(grid == 0) {
     pushMatrix();
     translate((width-height)/2, 0);
-    // scale(.95);
     paletaInicio();
     popMatrix();
   }
@@ -55,6 +54,12 @@ void keyPressed() {
     grid = 4;
   } if (key == 'X' || key == 'x') {
     grid = 0;
+  }
+  if (keyCode == 112) {
+    int s = second();  // Valores de 0 - 59
+    int m = minute();  // Valores de 0 - 59
+    int h = hour();    // Valores de  0 - 23
+    saveFrame("intermedio_marianaVivanco_grettelNorambuena_tracyNunez_camilaAguirre"+str(h)+str(m)+str(s)+".png");
   }
 }
 
