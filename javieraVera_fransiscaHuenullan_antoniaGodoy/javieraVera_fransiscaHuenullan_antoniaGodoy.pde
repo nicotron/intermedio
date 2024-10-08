@@ -13,7 +13,7 @@
 // Escribir dentro del programa de forma interactiva
 
 /*
-  Comandos:
+Comandos:
  
  Cambio de cuadrículas:
  2x2 = tecla número 1
@@ -85,23 +85,19 @@
  Se utilizarán solo dos familias tipográficas.
  */
 
-
 // Variables globales
 float x, y, textSize, maxTextSize;
 float desplazamientoY = 0; // Desplazamiento vertical del texto
 float radius;
-float angle ;
-float speed ;
+float speed;
 
 //variable tipografia
-PFont LemonMilk, LemonLight, LemonMedium, LemonBold,
-  Mirage, MirageLight, MirageMedium, MirageBold;
-
+PFont lemonMilk, lemonLight, lemonMedium, lemonBold, mirage, mirageLight, mirageMedium, mirageBold;
+String [] textWord;
 //variables boolean
 boolean grabar, tiempo, parpadeo, cambioColorAutomatico;
 boolean iniciado = false; // Estado de inicio
-boolean escribiendo = false; // Estado de escritura
-
+boolean escribiendoTexto1, escribiendoTexto2; // Estado de escritura
 
 // Variables int
 int tiempoCambioColor = 1000; // Tiempo en milisegundos para el cambio de color
@@ -116,17 +112,17 @@ int estiloIndex = 0;
 String[] estilos = {"Regular", "Bold", "Italic"};
 String inputText = ""; // Variable para almacenar el texto ingresado
 
-
 // Variables de colore
 color colorInicialPrincipal, colorInicialSecundario;
-color principal, secundario, terciario, cuarto, grisClaro,
-  grisMedio, grisOscuro, gris, principal2, secundario2;
+color principal, secundario, terciario, cuarto, grisClaro, grisMedio, grisOscuro, gris, principal2, secundario2;
 
 // Setup del programa
 void setup() {
   size(1440, 900); // Configuración del lienzo
   frameRate(30); // Definir la tasa de fotogramas
-  grabar = false;
+  textWord = new String[2];
+  textWord[0] = "Hola";
+  textWord[1] = "Mundo";
   tiempo = true;
   parpadeo = false;
   cambioColorAutomatico = false; // Inicialmente desactivado
@@ -137,21 +133,19 @@ void setup() {
   columnas = 1;         // Valor inicial para columnas
   filas = 1;           // Valor inicial para filas
   radius = 100;       // Radio del movimiento
-  angle = 0;         // Ángulo inicial
-  speed = 0.02;     // Velocidad del movimiento
 
-  // Cargar fuentes
-  LemonMilk = createFont("LEMONMILK-Regular.otf", textSize);
-  LemonLight = createFont("LEMONMILK-Light.otf", textSize);
-  LemonMedium = createFont("LEMONMILK-Medium.otf", textSize);
-  LemonBold = createFont("LEMONMILK-Bold.otf", textSize);
+  //Cargar fuentes
+  lemonMilk = createFont("LemonMilk-Regular.otf", textSize);
+  lemonLight = createFont("LemonMilk-Light.otf", textSize);
+  lemonMedium = createFont("LemonMilk-Medium.otf", textSize);
+  lemonBold = createFont("LemonMilk-Bold.otf", textSize);
 
-  Mirage = createFont("Mirage Regular.otf", textSize);
-  MirageLight = createFont("Mirage Thin.otf", textSize);
-  MirageMedium = createFont("Mirage Medium.otf", textSize);
-  MirageBold = createFont("Mirage Bold.otf", textSize);
+  mirage = createFont("Mirage Regular.otf", textSize);
+  mirageLight = createFont("Mirage Thin.otf", textSize);
+  mirageMedium = createFont("Mirage Medium.otf", textSize);
+  mirageBold = createFont("Mirage Bold.otf", textSize);
 
-  // Colores
+  //Colores
   principal = color(0); // Negro
   secundario = color(255); // Blanco
   principal2 = color(0); // Negro
@@ -162,162 +156,124 @@ void setup() {
   grisMedio = color(150); // Gris medio
   grisOscuro = color(80); // Gris oscuro
 
-  // Guardar colores iniciales
+  //Guardar colores iniciales
   colorInicialPrincipal = principal;
   colorInicialSecundario = secundario;
 }
 
 void draw() {
-  // Fondo del programa
+  //Fondo del programa
   background(secundario);
 
-  grabarParaVideo(); // Añade esta línea para activar la grabación
-
   pushMatrix();
-  // Llama a la función de grabación
+  //Llama a la función de grabación
   if (iniciado) {
-    if (!escribiendo) {
-      // Dibujo del fondo en patrón cuadricular
-      for (int i = 0; i < filas; i++) {
-        for (int j = 0; j < columnas; j++) {
-          x = j * width / columnas; // Posición en x
-          y = i * height / filas; // Posición en y
+    // if (!escribiendo) {
+    // Dibujo del fondo en patrón cuadricular
+    for (int i = 0; i < filas; i++) {
+      for (int j = 0; j < columnas; j++) {
+        x = j * width / columnas; // Posición en x
+        y = i * height / filas; // Posición en y
 
-          // Alternar colores para el patrón cuadricular
-          fill((i + j) % 2 == 0 ? secundario : principal);
-          rect(x, y, width / columnas, height / filas); // Dibujar cuadrado
+        // Alternar colores para el patrón cuadricular
+        fill((i + j) % 2 == 0 ? secundario : principal);
+        rect(x, y, width / columnas, height / filas); // Dibujar cuadrado
 
-          // Adjuntar fuente tipográfica para que se dibuje en el programa
-          textAlign(CENTER, CENTER);
-          textFont(estilos[estiloIndex].equals("Bold") ? LemonMilk : Mirage);
+        // Adjuntar fuente tipográfica para que se dibuje en el programa
+        textAlign(CENTER, CENTER);
+        textFont(estilos[estiloIndex].equals("Bold") ? lemonMilk : mirage);
 
-          // Determinar el tamaño máximo de texto que cabe en cada casilla
-          float maxTextSize = min(width / columnas * 0.8, height / filas * 0.8);
-          textSize = constrain(textSize, 10, maxTextSize); // Asegurar que el tamaño del texto sea razonable
+        // Determinar el tamaño máximo de texto que cabe en cada casilla
+        float maxTextSize = min(width / columnas * 2.8, height / filas * 2.8);
+        textSize =constrain(textSize, 10, maxTextSize); // Asegurar que el tamaño del texto sea razonable
 
-          // Establecer el tamaño del texto
-          textSize(textSize);
+        // Establecer el tamaño del texto
+        textSize(textSize);
 
-          // Determinar si el texto debe parpadear
-          boolean isBlinking = parpadeo && (parpadeoFrames / intervaloParpadeo) % 2 == 0;
+        // Determinar si el texto debe parpadear
+        boolean isBlinking = parpadeo && (parpadeoFrames / intervaloParpadeo) % 2 == 0;
 
-          // Dibujar texto en casillas blancas y negras
-          fill((i + j) % 2 == 0 ? principal : secundario);
-          if (isBlinking) {
-            text((i + j) % 2 == 0 ? "World" : "Hello", x + width / (2 * columnas), y + height / (2 * filas));
-          } else {
-            text((i + j) % 2 == 0 ? "Hello" : "World", x + width / (2 * columnas), y + height / (2 * filas));
-          }
+        // Dibujartexto en casillas blancas y negras
+        fill((i + j) % 2 == 0 ? principal : secundario);
+        if (isBlinking) {
+          text((i + j)% 2 == 0 ? textWord[1] : textWord[0], x + width / (2 * columnas), y + height / (2 * filas));
+        } else {
+          text((i + j)% 2 == 0 ? textWord[0] : textWord[1], x + width / (2 * columnas), y + height / (2 * filas));
         }
       }
-    } else {
-      // Mostrar solo el texto ingresado desde la esquina superior izquierda
-      fill(principal);
-      textSize(70);
-      textAlign(LEFT, TOP); // Cambiar alineación a la esquina superior izquierda
-      text(inputText, 1, 1); // Mostrar texto ingresado en (0,0)
     }
 
     // Actualizar el parpadeo
     if (parpadeo) {
       parpadeoFrames++;
     }
-    // Aumenta el ángulo para crear el movimiento
-    angle += speed;
-
-    // Reinicia el ángulo para que el movimiento sea continuo
-    if (angle > TWO_PI) {
-      angle -= TWO_PI;
-    }
   } else {
     // Mostrar solo una palabra al inicio "Presiona 'g' para iniciar la interacción"
     textAlign(CENTER, CENTER);
     textSize(40);
     fill(principal);
-    text("Presiona 'g' para iniciar la interacción", width / 2, height / 2); // Corregido para centrar el texto
-  }
-
-  // Cambiar colores automáticamente si está activado
-  if (cambioColorAutomatico) {
-    // Comprobar si ha pasado el tiempo de cambio
-    if (millis() - ultimoCambioColor > tiempoCambioColor) {
-      principal = color(random(0, 256), random(0, 256), random(0, 256)); // Color aleatorio en escala de grises
-      secundario = color(random(0, 256), random(0, 256), random(0, 256)); // Color aleatorio en escala de grises
-      ultimoCambioColor = millis(); // Actualizar el tiempo del último cambio de color
-    }
+    text("Bienvenido al Intermedio \nPresiona 'g' para iniciar la interacción", width / 2, height / 2); // Corregido para centrar el texto
   }
 
   popMatrix();
-  if (key == 'p' || key == 'P') { // todo esto es para sacar pantallazos con tiempo
-    int s = second(); // Valores de 0 - 59
-    int m = minute(); // Valores de 0 - 59
-    int h = hour(); // Valores de 0 - 23
-
-    saveFrame("Huenullan-Godoy-Vera" + str(h) + str(m) + str(s) + ".png");
-  }
 }
 
 void keyPressed() {
   if (key == 'g' || key == 'G') {
     iniciado = true; // Marcar que el programa ha sido iniciado
   }
-  if (key == 'w' || key == 'W') {
-    desplazamientoY -= 5; // Mover hacia arriba
-  } else if (key == 's' || key == 'S') {
-    desplazamientoY += 5; // Mover hacia abajo
+  //Iniciar escritura con la tecla *
+  if (key == '5') {
+    escribiendoTexto1 = ! escribiendoTexto1; // Cambiar estado a escribiendo
+  }
+  if (key == '6') {
+    escribiendoTexto2 = ! escribiendoTexto2; // Cambiar estado a escribiendo
   }
 
-  // Iniciar escritura con la tecla *
-  if (key == '*' || key == '*') {
-    escribiendo = true; // Cambiar estado a escribiendo
-    inputText = ""; // Vaciar texto ingresado
-  }
-
-  // Restablecer todo con Shift + *
-  if (key == '*' && keyCode == SHIFT) {
-    filas = 1;
-    columnas = 1;
-    textSize = 100; // Cambiado para coincidir con el tamaño inicial
-    inputText = "";
-    principal = color(0); // Volver a color original
-    secundario = color(255); // Volver a color original
-    iniciado = false;
-    escribiendo = false;
-    return; // Salir de la función
-  }
-
-  // Permitir agregar texto cuando está en modo escritura
-  if (escribiendo && key != CODED && key != '*' && key != '*') {
+  //Permitir agregar texto cuando está en modo escritura
+  if (escribiendoTexto1 && key != CODED) {
     if (key == BACKSPACE) {
       // Borrar el último carácter si se presiona BACKSPACE(borrar)
-      if (inputText.length() > 0) {
-        inputText = inputText.substring(0, inputText.length() - 1);
+      if (textWord[0].length() > 0) {
+        textWord[0] = textWord[0].substring(0, textWord[0].length() - 1);
       }
     } else {
-      inputText += key; // Agregar el carácter presionado al texto ingresado
+      textWord[0] += key; // Agregar el carácter presionado al texto ingresado
     }
     return; // Evitar ejecutar otros comandos
   }
 
-  // Activar/Desactivar parpadeo con la tecla O
-  if (key == 'o' || key == 'O') {
+  if (escribiendoTexto2 && key != CODED) {
+    if (key == BACKSPACE) {
+      // Borrar el último carácter si se presiona BACKSPACE(borrar)
+      if (textWord[1].length() > 0) {
+        textWord[1] = textWord[1].substring(0, textWord[1].length() - 1);
+      }
+    } else {
+      textWord[1] += key; // Agregar el carácter presionado al texto ingresado
+    }
+    return; // Evitar ejecutar otros comandos
+  }
+
+  //Activar/Desactivar parpadeo con la tecla O
+  if (key == '7') {
     parpadeo = !parpadeo; // Alternar el estado de parpadeo
     parpadeoFrames = 0;   // Reiniciar el contador de parpadeo
   }
 
-  // Cambiar estilo tipográfico con la tecla T
-  if (key == 't' || key == 'T') {
-    estiloIndex = (estiloIndex + 1) % estilos.length; // Cambiar al siguiente estilo
-    return; // Evitar ejecutar otros comandos
-  }
-  // Cambiar tamaño de texto con las teclas de flecha
+  //Cambiar estilo tipográfico con la tecla T
+  // if(key == '8') {
+  //   estiloIndex = (estiloIndex + 1) % estilos.length; // Cambiar al siguiente estilo
+  //   return; // Evitar ejecutar otros comandos
+  // }
+  //Cambiar tamaño de texto con las teclas de flecha
   if (keyCode == UP) {
     textSize += 10; // Aumentar tamaño de letra
   } else if (keyCode == DOWN) {
     textSize -= 10; // Disminuir tamaño de letra
   }
 
-  // Modificar filas y columnas con las teclas 1-4
+  //Modificar filas y columnas con las teclas 1-4
   if (key == '1') {
     filas = 1;
     columnas = 1; // Configuración 2x2
@@ -335,57 +291,21 @@ void keyPressed() {
     columnas = 5; // Configuración 5x5
   }
 
-  // Cambiar la velocidad de cambio de color cuando se presiona 'x'
-  if (key == 'x' || key == 'X') {
-    tiempoCambioColor = 2000; // Cambiar a 2000 ms para un cambio de color más lento
-    cambioColorAutomatico = true; // Activar el cambio automático
-    return; // Evitar ejecutar otros comandos
-  }
-
-  // Detener el cambio automático de color
-  if (key == 'y' || key == 'Y') {
-    cambioColorAutomatico = false; // Detener el cambio automático
-    // Reiniciar a los colores iniciales
+  //Detener el cambio automático de color
+  if (key == '9') {
     principal = colorInicialPrincipal;
     secundario = colorInicialSecundario;
   }
-  if (key == 'a' || key == 'A') {
+  if (key == '8') {
     principal = secundario2;   // Establecer color gris oscuro
     secundario = principal2;    // Establecer color gris claro
-
-    if (key == 's' || key == 'S') {
-      principal = grisOscuro;   // Establecer color gris oscuro
-      secundario = grisClaro;    // Establecer color gris claro
-    }
-  } else if (key == 'd' || key == 'D') {
-    principal = grisMedio;   // Cambiar a gris medio
-    secundario = grisClaro;    // Mantener color gris claro
   }
 
-  // Restablecer colores al inicial con la tecla 'F'
-  if (key == 'f' || key == 'F') {
-    principal = colorInicialPrincipal;
-    secundario = colorInicialSecundario;
-  }
-}
-// Grabar el video
-void grabarParaVideo() {
-  grabar = !grabar; // Alternar grabación
-  if (grabar == true) {
-    // Aquí va la lógica para grabar video
-    // Tu código de grabación aquí
-    if (tiempo == true) {
-      frameCount = 0;
-      frames = frameCount;
-      println(frames);
-      tiempo = false;
-    }
-    frames = frameCount;
-    //saveFrame("video/huenullan-godoy-vera.png");
+  if (keyCode == 112) { // todo esto es para sacar pantallazos con tiempo
+    int s = second(); // Valores de 0 - 59
+    int m = minute(); // Valores de 0 - 59
+    int h = hour(); // Valores de 0 - 23
 
-    if (frames > 900) {
-      grabar = false;
-      println("fin");
-    }
+    saveFrame("intermedio_javieraVera_fransiscaHuenullan_antoniaGodoy" + str(h) + str(m) + str(s) + ".png");
   }
 }
