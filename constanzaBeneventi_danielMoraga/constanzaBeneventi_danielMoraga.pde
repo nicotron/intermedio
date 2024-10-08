@@ -25,15 +25,21 @@ int forma = 0; // Almacena la figura
 // II. Set ups - Configuraciones
 void setup() {
   size(1440, 900); // Genera canvas de 800x800 pixeles
-  fullScreen();
+  // fullScreen();
   blanco = color(255, 255, 255);
-  negro = color(0, 0, 0);
+  negro = 0;
+  blendMode(DIFFERENCE);
 }
 
 // III. Loops de dibujo
 void draw() {
   background(negro); // Asigna color al fondo
-  dibujo(width / 2, height / 2 + 80, 300, forma);
+  
+  pushMatrix();
+  translate(width / 2, height / 2);
+  rotate(frameCount*0.005);
+  dibujo(0, 0, height*0.45, forma);
+  popMatrix();
   mostrarNumero(); // Muestra el número del indicador
   mostrarNombre(); // Muestra el nombre de la figura
 }
@@ -43,21 +49,33 @@ void keyPressed() {
   if (key >= '1' && key <= '9') {
     forma = key - '0'; // Convierte el carácter en un número
   }
+  if (key == ' ') {
+    negro = (negro + 255) % 510;
+  }
+// guardar con la letra p
+  if (keyCode == 112) {
+    int s = second();  // Valores de 0 - 59
+    int m = minute();  // Valores de 0 - 59
+    int h = hour();    // Valores de 0 - 23
+    saveFrame("intermedio_constanzaBeneventi_danielMoraga" + str(h) + str(m) + str(s) + ".png");
+  }
 }
 
 void dibujo(float x, float y, float radio, int num) {
   fill(blanco); // Asigna color blanco
-  stroke(blanco); // Cambia el color del contorno a blanco
-
+  noStroke();
   // Dibuja un punto
   if (num == 1) {
-    circle(width / 2, height / 2 + 65, width / 120); // Circulo de 10 píxeles
+    circle(0,0, height*0.1); // Circulo de 10 píxeles
 
   // Dibuja una línea
   } else if (num == 2) {
-    line(width / 2 - width / 4, height / 2 + 65, width / 2 + width / 4, height / 2 + 65);
-    circle(width / 2 - width / 4, height / 2 + 65, width / 120);
-    circle(width / 2 + width / 4, height / 2 + 65, width / 120);
+    strokeWeight(15);
+    stroke(blanco); // Cambia el color del contorno a blanco
+    line(-height*.4, 0, height*.4, 0);
+    noStroke();
+    circle(-height*.4, 0, 20);
+    circle(height*.4, 0, 20);
 
   // Dibuja polígonos
   } else if (num >= 3 && num <= 9) {
@@ -74,15 +92,16 @@ void dibujo(float x, float y, float radio, int num) {
 }
 
 void mostrarNumero() {
+  
   fill(blanco);
-  textSize(80);
-  textAlign(RIGHT, TOP); // Alinea el texto a la derecha y arriba
-  text(str(forma), width - 55, 40); // Muestra el número en la esquina superior derecha
+  textSize(height*.5);
+  textAlign(CENTER, CENTER); // Alinea el texto a la derecha y arriba
+  text(str(forma), width/2, height/2); // Muestra el número en la esquina superior derecha
 }
 
 void mostrarNombre() {
   fill(blanco);
-  textSize(80);
+  textSize(height*.3);
   textAlign(CENTER, TOP); // Alinea el texto al centro y arriba
   String nombre = "";
 
@@ -107,14 +126,7 @@ void mostrarNombre() {
     nombre = "Eneágono";
   }
 
-  text(nombre, width / 2, 40); // Muestra el nombre sobre la figura
+  text(nombre, width / 2, height*0.7); // Muestra el nombre sobre la figura
 
-// guardar con la letra p
-  if (key == 'p') {
-    int s = second();  // Valores de 0 - 59
-    int m = minute();  // Valores de 0 - 59
-    int h = hour();    // Valores de 0 - 23
-    saveFrame("Constanza_Beneventi_Daniel_Moraga" + str(h) + str(m) + str(s) + ".png");
-  }
 
 }

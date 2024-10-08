@@ -1,24 +1,3 @@
-/* UNIACC
- labdestec
- proyecto F.I.S.
- 
- Sofia Garrido A.
- Isabella Marchant M.
- Fernanda Martinez U.
- 
- El proyecto permitirá al usuario crear mosaicos con formas geometricas
- de diferentes colores, con la tecla 1 cambia la froma de la figura de fondo
- con la tecla 2 cambia la forma de la figura del centro y con la tecla 3 cambia 
- la forma de las figuras de las esquinas, con la tecla Z crean
- repeticiones del mosaico en grillas de 4x4 y con la tecla X guardan una imagen
- del mosaico terminado.
- 
- Actualmente falta posicionar bien centradas las figuras grandes del centro,
- crear las grillas con la Z y guardar con la X. intentamos reducir el codigo
- lo maximo posible ya que el primer intento tuvo mas de 500 lineas y aun no 
- hacia ni la mitad del trabajo.
- */
- 
 // Variables Globales
 float x, y;
 color primero, segundo, tercero, cuarto, quinto, sexto, septimo, octavo, noveno,
@@ -28,6 +7,7 @@ char lastKeyPressed = '0';
 int formaGrandeActual = 0;             // Formas centro (tecla 1)
 int formaPequeñaActual = 0;            // Formas pequeña centro (tecla 2)
 int formaEsquinaActual = 0;            // Formas esquinas (tecla 3)
+boolean crearGrilla = false;           // Bandera para crear la grilla
 
 // Configuraciones
 void setup () {
@@ -61,18 +41,11 @@ void setup () {
 void draw() {
   background(noveno);
   
-  dibujarFormaGrande(formaGrandeActual);             // Formas grandes (tecla 1)
-  dibujarFormaPequeña(x, y, formaPequeñaActual, 2);  // Formas en el centro (tecla 2)
-
-// Formas en las esquinas (tecla 3)
-  // esquina superior izquierda
-  dibujarFormaPequeña(width * 0.3, height * 0.1, formaEsquinaActual, 0.9); 
-  // esquina superior derecha
-  dibujarFormaPequeña(width * 0.7, height * 0.1, formaEsquinaActual, 0.9); 
-  // esquina inferior izquierda
-  dibujarFormaPequeña(width * 0.3, height * 0.9, formaEsquinaActual, 0.9); 
-  // esquina inferior derecha
-  dibujarFormaPequeña(width * 0.7, height * 0.9, formaEsquinaActual, 0.9); 
+  if (!crearGrilla) {
+    dibujarMosaico(); // Dibuja una única composición
+  } else {
+    crearMosaicoGrilla(); // Crea la grilla de mosaicos
+  }
 }
 
 // Teclas
@@ -83,9 +56,41 @@ void keyPressed() {
     formaPequeñaActual = (formaPequeñaActual + 1) % 8; // Cambiar forma pequeña
   } else if (key == '3') {
     formaEsquinaActual = (formaEsquinaActual + 1) % 8; // Cambiar forma esquina
+  } else if (key == ' ') {
+    crearGrilla = !crearGrilla; // Activa o desactiva la creación de grilla
+  } else if (keyCode == 112) { // todo esto es para sacar pantallazos con tiempo
+    int s = second(); // Valores de 0 - 59
+    int m = minute(); // Valores de 0 - 59
+    int h = hour(); // Valores de 0 - 23
+
+    saveFrame("intermedio_sofiaGarrido_isabellaMarchant_fernandaMartinez" + str(h) + str(m) + str(s) + ".png");
   }
 }
 
+// Dibuja el mosaico original
+void dibujarMosaico() {
+  dibujarFormaGrande(formaGrandeActual);             // Formas grandes (tecla 1)
+  dibujarFormaPequeña(x, y, formaPequeñaActual, 2);  // Formas en el centro (tecla 2)
+
+  // Formas en las esquinas (tecla 3)
+  dibujarFormaPequeña(width * 0.3, height * 0.1, formaEsquinaActual, 0.9); 
+  dibujarFormaPequeña(width * 0.7, height * 0.1, formaEsquinaActual, 0.9); 
+  dibujarFormaPequeña(width * 0.3, height * 0.9, formaEsquinaActual, 0.9); 
+  dibujarFormaPequeña(width * 0.7, height * 0.9, formaEsquinaActual, 0.9); 
+}
+
+// Crear grilla de 4x4 de mosaicos
+void crearMosaicoGrilla() {
+  for (int i = 0; i < columnas; i++) {
+    for (int j = 0; j < filas; j++) {
+      pushMatrix();
+      translate(i * width / columnas, j * height / filas);
+      scale(1.0 / columnas); // Escala las formas para que se ajusten a la grilla
+      dibujarMosaico();
+      popMatrix();
+    }
+  }
+}
 
 void dibujarFormaGrande(int indiceForma) {
   switch (indiceForma) {
@@ -156,11 +161,11 @@ void dibujarFormaPequeña(float centroX, float centroY, int indiceForma,
   }
 }
 
-// Funciones de formas grandes
+// Funciones de formas grandes centradas
 void Cuadrado() {
   fill(primero);
   noStroke();
-  square(width * 0.3, height * 0.3, width * 0.4);
+  square(width * 0.5 - width * 0.2, height * 0.5 - width * 0.2, width * 0.4);
 }
 
 void Circulo() {
@@ -172,39 +177,39 @@ void Circulo() {
 void Triangulo() {
   fill(tercero);
   noStroke();
-  triangle(width * 0.5, height * 0.1, width * 0.3, height * 0.8, 
+  triangle(width * 0.5, height * 0.2, width * 0.3, height * 0.8, 
   width * 0.7, height * 0.8);
 }
 
 void Rombo() {
   fill(cuarto);
   noStroke();
-  quad(width * 0.3, height * 0.5, width * 0.5, height * 0.9, width * 0.7, 
-  height * 0.5, width * 0.5, height * 0.1);
+  quad(width * 0.5 - width * 0.2, height * 0.5, width * 0.5, height * 0.9, 
+  width * 0.5 + width * 0.2, height * 0.5, width * 0.5, height * 0.1);
 }
 
 void Rectangulo() {
   fill(quinto);
   noStroke();
-  rect(width * 0.3, height * 0.4, width * 0.4, height * 0.4);
+  rect(width * 0.5 - width * 0.2, height * 0.5 - height * 0.15, 
+  width * 0.4, height * 0.3);
 }
 
 void Pausa() {
   fill(sexto);
   noStroke();
-  rect(width * 0.4, height * 0.1, width * 0.1, height * 0.7);
-  rect(width * 0.55, height * 0.1, width * 0.1, height * 0.7);
+  rect(width * 0.5 - width * 0.03, height * 0.35, width * 0.06, height * 0.3);
 }
 
 void Deltoide() {
   fill(septimo);
   noStroke();
-  quad(width * 0.3, height * 0.4, width * 0.5, height * 0.9, width * 0.7, 
-  height * 0.4, width * 0.5, height * 0.1);
+  quad(width * 0.3, height * 0.5, width * 0.5, height * 0.7, width * 0.7, 
+  height * 0.5, width * 0.5, height * 0.3);
 }
 
 void Ovalo() {
   fill(octavo);
   noStroke();
-  ellipse(width * 0.5, height * 0.5, width * 0.4, height * 0.55);
+  ellipse(width * 0.5, height * 0.5, width * 0.35, height * 0.45);
 }

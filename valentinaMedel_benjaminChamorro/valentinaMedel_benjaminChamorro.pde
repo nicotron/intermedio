@@ -31,13 +31,7 @@ void setup() {
 }
 
 void draw() {
-   if (bg){
-    fill(255, 5);
-    rect(width/2, height/2, width, height);
-  } else {
-    fill(0, 5); 
-    rect(width/2, height/2, width, height);
-  }
+  
   pushMatrix();
   translate(width / 2, height / 2);
   float scaleVar = map(mouseX, 0, width, 0.5, 5);
@@ -57,10 +51,6 @@ void draw() {
   }
   popMatrix();
   angle += map(mouseY, 0, height, -1, 1);
-}
-
-void mousePressed() {
-  bg = !bg; 
 }
 
 void keyPressed() {
